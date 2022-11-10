@@ -5,10 +5,31 @@ body {
     background-color: #0093E9;
     background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
     background-attachment: fixed;
+    margin: 0;
+}
+
+#wrp {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+h6 {
+    font-size: 1.7rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+#turn {
+    margin-bottom: 3rem;
+}
+
+#round {
+    margin-top: 3rem;
 }
 
 .grid {
-    margin: 10vh auto 0;
     display: flex;
     flex-wrap: wrap;
     width: 340px;
@@ -49,4 +70,49 @@ body {
 .start .swal-button {
     font-size: 2rem;
     padding: 20px 48px;
+}
+
+@media screen and ((max-width: 350px) or (max-height: 350px)) {
+    .grid {
+        width: 310px;
+    }
+
+    .grid div {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media screen and ((max-width: 310px) or (max-height: 310px)) {
+    .grid {
+        width: 280px;
+    }
+
+    .grid div {
+        width: 90px;
+        height: 90px;
+    }
+}
+
+@media screen and (max-height: 530px) {
+    #turn {
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+    }
+    #round{
+        margin-top: 1rem;
+        font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-height: 440px) {
+    #round{
+        font-size: 0;
+    }
+}
+
+@media screen and (max-height: 420px) {
+    #turn{
+        font-size: 0;
+    }
 }

@@ -1,16 +1,18 @@
 class TicTacToe {
     constructor() {
         this.grid = document.querySelector('.grid')
+        this.turn = document.querySelector('#turn')
+        this.roundEl = document.querySelector('#round')
         this.toggleInit = true
         this.toggle = true
+        this.round = 0
         this.controlO = []
         this.controlX = []
-        
+
         this.choosePlayer()
-        this.startGame()
     }
-    
-    choosePlayer(){
+
+    choosePlayer() {
         swal({
             title: 'Pick your sign!',
             buttons: {
@@ -20,15 +22,20 @@ class TicTacToe {
             className: 'start'
         })
             .then((value) => {
-                switch (value) {
-                    case "cross":
-                        this.toggleInit = false
-                        this.toggle = false;
+                if (value == 'cross') {
+                    this.toggleInit = false
+                    this.toggle = false;
                 }
+                this.startGame()
             });
     }
 
     startGame() {
+        this.round++
+        this.roundEl.innerHTML = `Round: ${this.round}`
+        if (this.round % 2 == 0) this.turn.innerHTML = `Player 2's turn`;
+        else this.turn.innerHTML = `Player 1's turn`
+        this.turn.style.visibility = 'visible'
         this.grid.innerHTML = `
             <div class="h1 v1 d1"></div>
             <div class="h1 v2"></div>
@@ -61,6 +68,7 @@ class TicTacToe {
 
                 const cellsArr = Array.from(this.cells)
                 if (!cellsArr.some(cur => cur.innerText === '')) {
+                    this.turn.style.visibility = 'hidden'
                     swal({
                         title: "Tie!",
                         icon: 'error'
@@ -72,13 +80,17 @@ class TicTacToe {
                             this.controlX = []
                             this.countsO = {};
                             this.countsX = {};
-    
+
                             this.startGame()
                         });
                 }
 
                 this.whoWon(this.countsO, cell)
                 this.whoWon(this.countsX, cell)
+
+                if (this.turn.innerHTML == `Player 1's turn`)
+                    this.turn.innerHTML = `Player 2's turn`
+                else this.turn.innerHTML = `Player 1's turn`
 
                 this.toggle = !this.toggle
             }, { once: true })
@@ -94,8 +106,10 @@ class TicTacToe {
     whoWon(obj, el) {
         for (let klass in obj) {
             if (obj[klass] === 3) {
+                this.turn.style.visibility = 'hidden'
+                let winner = this.turn.innerHTML.substring(0, 8)
                 swal({
-                    title: `${el.innerHTML} wins!`,
+                    title: `${winner} wins!`,
                     icon: 'success'
                 })
                     .then(() => {
